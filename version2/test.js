@@ -9,8 +9,7 @@ Using JavaScript only (adding HTML to index.html is NOT allowed), create a funct
 
 Use the following array of objects:
 */
-const books = [
-	{
+const books = [{
 		bookName: 'The Nature of Software Development',
 		author: 'Ron Jeffries',
 		coverURL: 'https://cdn-images-1.medium.com/max/1200/1*CQRh-pFTZ97ReXogbefleQ.png',
@@ -27,6 +26,25 @@ const books = [
 	},
 ];
 
+const body = document.body;
+
+function myBooks(arr) {
+	arr.forEach(book => {
+		const ul = document.createElement('ul');
+		for (let detail in book) {
+			// console.log(book[detail]);
+			const li = document.createElement('li');
+			li.innerHTML = book[detail];
+			ul.appendChild(li);
+			body.appendChild(ul);
+		}
+
+	});
+
+}
+myBooks(books);
+
+
 /*
 2.
 Write a function that:
@@ -35,6 +53,38 @@ Write a function that:
 - Displays the "name", "email" and "city" of the first person inside an unordered list
 - Makes use of async/await
 */
+const link = 'https://jsonplaceholder.typicode.com/users/1';
+getUsers(link);
+async function getUsers(url) {
+
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		console.log(data);
+		const ul = document.createElement('ul');
+		body.appendChild(ul);
+
+		const liName = document.createElement('li');
+		liName.innerHTML = data.name;
+		ul.appendChild(liName);
+
+		const liEmail = document.createElement('li');
+		liEmail.innerHTML = data.email;
+		ul.appendChild(liEmail);
+
+		const liCity = document.createElement('li');
+		liCity.innerHTML = data.address.city;
+		ul.appendChild(liCity);
+
+	} catch (error) {
+		console.log(error);
+	}
+
+
+}
+
+
+
 
 /*
 3.
@@ -45,3 +95,15 @@ Write a JavaScript function that:
   Example: 'the quick brown fox'
   Expected Output: 'The Quick Brown Fox '
 */
+
+const string = 'the quick brown fox';
+upperCase(string);
+
+function upperCase(str) {
+	str = str.split(" ");
+	for (let i = 0; i < str.length; i++) {
+		str[i] = str[i][0].toUpperCase() + str[i].substr(1);
+	}
+
+	return str.join(" ");
+}
